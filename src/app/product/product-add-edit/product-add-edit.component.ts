@@ -48,17 +48,15 @@ export class ProductAddEditComponent implements OnInit, AfterViewInit {
   getData() {
     this.activatedRoute.queryParams.subscribe(
       param => {
-        debugger;
         if (param.id) {
           this.id = parseInt(param.id);
           this.productsServiceProxy.getProductById({ id: this.id } as ProductIDentityDto).subscribe(
             success => {
-              debugger
               this.productForm.patchValue({
                 name: success.name,
                 price: success.price
               });
-              this.imageUrl = 'assets/images/' + success.photo;
+              this.imageUrl =  success.photo;
             }
           );
         }
