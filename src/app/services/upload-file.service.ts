@@ -18,7 +18,6 @@ export class UploadFile {
   UploadProductImage(
     files: File
   ): Observable<HttpEvent<UploadFileResponse>> {
-    debugger;
     return this.uploadFile(files);
   }
   

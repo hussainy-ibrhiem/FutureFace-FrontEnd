@@ -56,7 +56,7 @@ export class ProductAddEditComponent implements OnInit, AfterViewInit {
                 name: success.name,
                 price: success.price
               });
-              this.imageUrl =  success.photo;
+              this.imageUrl = success.photo;
             }
           );
         }
@@ -123,7 +123,7 @@ export class ProductAddEditComponent implements OnInit, AfterViewInit {
           if (event.type === HttpEventType.UploadProgress) {
           }
           if (event.type === HttpEventType.Response) {
-            this.imageUrl = event.body.url + event.body.fileName;
+            this.imageUrl = event.body.fileName;
           }
         }
       );

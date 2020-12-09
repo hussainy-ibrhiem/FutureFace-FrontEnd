@@ -72,7 +72,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
           catchError(() => {
             return observableOf([]);
           }))
-      ).subscribe((data) => { this.productList = data; this.productList });
+      ).subscribe((data) => { this.productList = data;  });
   }
   ToCreate() {
     this.router.navigateByUrl('product/add');
