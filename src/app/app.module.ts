@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +32,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ExcelService } from './services/ExcelService';
 import { UploadFile } from './services/upload-file.service';
+import { ConfigurationService } from './services/Configuration.Service';
 
 const matmodules = [
   MatFormFieldModule,
@@ -78,6 +79,13 @@ export function getApiBaseUrl(): string {
     ReactiveFormsModule,
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (configService: ConfigurationService) => () =>
+        configService.load(),
+      deps: [ConfigurationService],
+      multi: true,
+    },
     { provide: API_BASE_URL, useFactory: getApiBaseUrl },
     ProductsServiceProxy,
     HttpClientModule,

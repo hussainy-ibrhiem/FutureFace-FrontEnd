@@ -1,19 +1,24 @@
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ConfigurationService } from './Configuration.Service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UploadFile {
+  private configuration$: Configuration;
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private config: ConfigurationService
     ) {
+    this.configuration$ = this.config.settings;
   }
  
   UploadProductImage(
     files: File
   ): Observable<HttpEvent<UploadFileResponse>> {
+    debugger;
     return this.uploadFile(files);
   }
   
@@ -24,7 +29,7 @@ export class UploadFile {
     formData.append('file', files);
     const uploadReq = new HttpRequest(
       'POST',
-      'https://localhost:44326/api/Products/UploadImage' ,
+      this.configuration$.BaseURL+'/api/Products/UploadImage' ,
       formData,
       {
         reportProgress: false,
