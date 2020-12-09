@@ -1,0 +1,117 @@
+<form [formGroup]='productForm' (ngSubmit)="onSubmit()">
+    <div class="container p-t-20">
+        <div class="col-md-12">
+            <div class="haeder_div_page">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="title_div_page">
+                                <span class="material-icons description">
+                                    description
+                                </span>Product Add/Edit</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body_div_page">
+                <div class="col-md-12">
+                    <div class="row">
+                        <!-- controls -->
+                        <div class="col-md-12">
+                            <!-- name -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="label">Product Name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="w-100" appearance="outline">
+                                                <input formControlName="name"
+                                                    placeholder="Product Name" matInput>
+                                                <mat-error *ngIf="productForm.get('name').errors?.required">Name Required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- price -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="label">Product Price</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="w-100" appearance="outline">
+                                                <input type="number" formControlName="price"
+                                                    placeholder="Product Price" matInput>
+                                                <mat-error *ngIf="productForm.get('name').errors?.required">Price Required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- photo -->
+                            <div class="col-md-6">
+
+                                <div class=" col-md-12 pr-1 img_background">
+                                  <div class="row">
+                                    <label class="label-up">upload image</label>
+                  
+                                    <div class="col-md-12 p-d-0">
+                                      <img class="img_background" [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')'}" />
+                  
+                                      <div class="col-md-12 m-t-15">
+                                        <div class="row">
+                                          <div class="col-md-8 p-d-0">
+                                            <div class="div-text">
+                                                <img [src]="imageUrl">
+                                            </div>
+                                          </div>
+                                          <!-- <div class="col-md-4">
+                                            <button (click)="file.click()" class="btn btn-block btn-CHANGE" type="button">
+                                              Browse</button>
+                                          </div> -->
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                  
+                                <div class="form-group row">
+                                  <label for="logo"> chooseFile</label>
+                                  <input #file type="file" (change)="processDataFile(file)">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- buttons -->
+                        <div class="col-md-12 m-t-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn-filterN" (click)="BackToList()">
+                                        BackToList
+                                    </button>
+                                </div>
+
+                                <!-- <div class="col-md-4">
+                                    <button type="reset" class="btn-filterN ">
+                                        Reset
+                                    </button>
+                                </div> -->
+
+                                <div class="col-md-6">
+                                    <!-- <button type="submit" [disabled]="TeamForm.invalid" -->
+                                    <button [disabled]="productForm.invalid" type="submit" [ngClass]="productForm.invalid ? '':'color-blur'"
+                                        class="btn-filterN">
+                                       Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

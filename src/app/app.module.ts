@@ -3,16 +3,87 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppConfigService } from './shared/AppConfigService';
+import { API_BASE_URL, ProductsServiceProxy } from 'src/assets/Swagger/SwaggerGenerated';
+import { ProductAddEditComponent } from './product/product-add-edit/product-add-edit.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { HttpClientModule } from '@angular/common/http';
+import {
+  MatTableModule,
+  MatFormFieldModule,
+  MatPaginatorModule,
+  MatInputModule,
+  MatCardModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatSelectModule,
+  MatRadioModule,
+  MatTreeModule,
+  MatAutocompleteModule,
+  MatDialogModule,
+  MatNativeDateModule,
+  MatDatepickerModule,
+  MatIconModule,
+  MatTabsModule,
+  MatCheckboxModule
+} from "@angular/material";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ExcelService } from './services/ExcelService';
+import { UploadFile } from './services/upload-file.service';
 
+const matmodules = [
+  MatFormFieldModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatInputModule,
+  MatCardModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatSelectModule,
+  MatRadioModule,
+  MatCheckboxModule,
+  MatAutocompleteModule,
+  MatTreeModule,
+  MatIconModule,
+  MatAutocompleteModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatIconModule,
+  MatAutocompleteModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatIconModule,
+  MatTabsModule,
+  MatDialogModule,
+];
+export function getApiBaseUrl(): string {
+  return AppConfigService.appConfig.BaseURL;
+}
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProductAddEditComponent,
+    ProductListComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ...matmodules,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: API_BASE_URL, useFactory: getApiBaseUrl },
+    ProductsServiceProxy,
+    HttpClientModule,
+    ExcelService,
+    UploadFile
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,1 +1,106 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+.btn-filterN {
+  width: 100%;
+  height: 36px;
+  background: transparent;
+  font-size: 14px;
+  color: rgb(49, 102, 156);
+  text-align: center;
+  line-height: 16px;
+  background-color: rgba(98, 2, 238, 0);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  margin: 4px 0;
+  font-family: "Tajawal-Bold";
+}
+.list_ta th {
+  border: none !important;
+  background-color: #f4f4f4 !important;
+}
+.list_ta tr {
+  height: 40px !important;
+  text-align: right;
+}
+.delete_div{
+  background-color: rgba(49, 102, 156, 0.65);
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+  border-radius:4px ;
+  margin: 0 4px;
+  cursor: pointer;
+  float: left;
+}
+.delete{
+  color: #ffffff;
+  font-size: 18px;
+  margin: 3px;
+}
+.color-blur{
+  background-color: rgb(49, 102, 156) !important;
+  color: #fff;
+}
+.w-100 .mat-form-field-flex>.mat-form-field-infix {
+  padding: 0.5em 0px !important;
+}
+
+.w-100 .mat-form-field-label-wrapper {
+  top: -1.4em;
+}
+
+.w-100 .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-1em) scale(.75);
+  width: 133.33333%;
+}
+
+.w-100 .mat-form-field-appearance-outline.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label{
+  transform: translateY(-1.19375em) scale(.75);
+  width: 133.33333%;
+}
+.w-100 .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-1.19375em) scale(.75);
+  width: 133.33333%;
+}
+.w-100 .mat-form-field-infix {
+  padding: .5em 0;
+  border-top: .56em solid transparent;
+}
+.body_div_page{
+  width: 100%;
+  background-color: #ffffff;
+  min-height: 10vh;
+  padding-top: 20px;
+  padding-bottom: 16px;
+}
+.description{
+  position: relative;
+  top: 5px;
+  padding: 5px;
+}
+.title_div_page{
+  font-size: 16px;
+  line-height: 40px;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+  font-family: 'Tajawal-Bold';
+  margin-top: -5px;
+}
+.haeder_div_page{
+  background-color: rgba(49, 102, 156, 0.65);
+  height:40px ;
+  border-radius: 6px 6px 0 0;
+  }
+  .border{
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 16px 0;
+  }
+td{
+  text-align: start;
+}
+table{
+  width: 100%;;
+}
+.search{
+width: 22% !important;
+}
