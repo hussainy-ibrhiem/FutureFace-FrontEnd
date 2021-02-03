@@ -15,6 +15,189 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable()
+export class CategoryServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createCategory(body: CreateCategoryInputDto | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/Category/CreateCategory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateCategory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateCategory(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateCategory(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getCategoryDDL(): Observable<DDLDto[]> {
+        let url_ = this.baseUrl + "/api/Category/GetCategoryDDL";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCategoryDDL(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCategoryDDL(<any>response_);
+                } catch (e) {
+                    return <Observable<DDLDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DDLDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCategoryDDL(response: HttpResponseBase): Observable<DDLDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DDLDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DDLDto[]>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    getCategoryByParentIdDDl(body: GetCategoryByParentIdInputDto | undefined): Observable<DDLDto[]> {
+        let url_ = this.baseUrl + "/api/Category/GetCategoryByParentIdDDl";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCategoryByParentIdDDl(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCategoryByParentIdDDl(<any>response_);
+                } catch (e) {
+                    return <Observable<DDLDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DDLDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCategoryByParentIdDDl(response: HttpResponseBase): Observable<DDLDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DDLDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DDLDto[]>(<any>null);
+    }
+}
+
+@Injectable()
 export class ProductsServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -357,11 +540,89 @@ export class ProductsServiceProxy {
     }
 }
 
+export class CreateCategoryInputDto {
+    name?: string | undefined;
+    parentId?: number | undefined;
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.parentId = _data["parentId"];
+        }
+    }
+
+    static fromJS(data: any): CreateCategoryInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateCategoryInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["parentId"] = this.parentId;
+        return data; 
+    }
+}
+
+export class DDLDto {
+    id?: number;
+    name?: string | undefined;
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): DDLDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DDLDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        return data; 
+    }
+}
+
+export class GetCategoryByParentIdInputDto {
+    parentId?: number;
+
+    init(_data?: any) {
+        if (_data) {
+            this.parentId = _data["parentId"];
+        }
+    }
+
+    static fromJS(data: any): GetCategoryByParentIdInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCategoryByParentIdInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["parentId"] = this.parentId;
+        return data; 
+    }
+}
+
 export class AddEditProductInputDto {
     id?: number;
     name?: string | undefined;
     photo?: string | undefined;
     price?: number;
+    quantity?: number;
+    categoryId?: number;
+    subCategoryId?: number;
 
     init(_data?: any) {
         if (_data) {
@@ -369,6 +630,9 @@ export class AddEditProductInputDto {
             this.name = _data["name"];
             this.photo = _data["photo"];
             this.price = _data["price"];
+            this.quantity = _data["quantity"];
+            this.categoryId = _data["categoryId"];
+            this.subCategoryId = _data["subCategoryId"];
         }
     }
 
@@ -385,6 +649,9 @@ export class AddEditProductInputDto {
         data["name"] = this.name;
         data["photo"] = this.photo;
         data["price"] = this.price;
+        data["quantity"] = this.quantity;
+        data["categoryId"] = this.categoryId;
+        data["subCategoryId"] = this.subCategoryId;
         return data; 
     }
 }
@@ -418,6 +685,11 @@ export class ProductDto {
     photo?: string | undefined;
     price?: number;
     lastUpdated?: Date | undefined;
+    categoryName?: string | undefined;
+    subCategoryName?: string | undefined;
+    quantity?: number;
+    categoryId?: number;
+    subCategoryId?: number | undefined;
 
     init(_data?: any) {
         if (_data) {
@@ -426,6 +698,11 @@ export class ProductDto {
             this.photo = _data["photo"];
             this.price = _data["price"];
             this.lastUpdated = _data["lastUpdated"] ? new Date(_data["lastUpdated"].toString()) : <any>undefined;
+            this.categoryName = _data["categoryName"];
+            this.subCategoryName = _data["subCategoryName"];
+            this.quantity = _data["quantity"];
+            this.categoryId = _data["categoryId"];
+            this.subCategoryId = _data["subCategoryId"];
         }
     }
 
@@ -443,6 +720,11 @@ export class ProductDto {
         data["photo"] = this.photo;
         data["price"] = this.price;
         data["lastUpdated"] = this.lastUpdated ? this.lastUpdated.toISOString() : <any>undefined;
+        data["categoryName"] = this.categoryName;
+        data["subCategoryName"] = this.subCategoryName;
+        data["quantity"] = this.quantity;
+        data["categoryId"] = this.categoryId;
+        data["subCategoryId"] = this.subCategoryId;
         return data; 
     }
 }

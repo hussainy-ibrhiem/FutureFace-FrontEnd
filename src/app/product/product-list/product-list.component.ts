@@ -16,7 +16,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   resultLength = 0;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['name', 'price', 'photo', 'lastUpdated', 'symbol'];
+  displayedColumns = ['name', 'price', 'photo', 'Quantity', 'SubCategoryName', 'CategoryName', 'symbol'];
   productList: ProductDto[];
   searchData = {
     name: '',
@@ -100,7 +100,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     this.searchForm.controls.name.setValue('');
     this.loadData();
   }
-  exportAsXLSX(): void {
-    this.excelService.exportAsExcelFile(this.productList, 'sample');
+  goToAddCategory(): void {
+    this.router.navigateByUrl('category/add');
   }
 }

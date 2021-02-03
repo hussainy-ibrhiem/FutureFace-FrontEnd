@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UploadFile } from 'src/app/services/upload-file.service';
-import { AddEditProductInputDto, ProductIDentityDto, ProductsServiceProxy } from 'src/assets/Swagger/SwaggerGenerated';
+import { AddEditProductInputDto, CategoryServiceProxy, DDLDto, GetCategoryByParentIdInputDto, ProductIDentityDto, ProductsServiceProxy } from 'src/assets/Swagger/SwaggerGenerated';
 import { DomSanitizer } from '@angular/platform-browser';
 export interface ImageInfo {
   imageUrl: string;
@@ -22,6 +22,9 @@ export class ProductAddEditComponent implements OnInit, AfterViewInit {
   productForm = new FormGroup({
     name: new FormControl('', Validators.required),
     price: new FormControl('', Validators.required),
+    parentId: new FormControl('', Validators.required),
+    subParentId: new FormControl('', Validators.required),
+    quantity: new FormControl('', Validators.required),
   });
   id = 0;
   private file: File;
@@ -31,21 +34,41 @@ export class ProductAddEditComponent implements OnInit, AfterViewInit {
     imageName: '',
     imageSize: '',
   };
+  categoryDDL: DDLDto[];
+  subcategoryDDL: DDLDto[];
   constructor(
     private productsServiceProxy: ProductsServiceProxy,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
     private uploadFile: UploadFile,
-    private DomSanitizer: DomSanitizer
-  ) { }
+    private DomSanitizer: DomSanitizer,
+    private categoryServiceProxy: CategoryServiceProxy,
+
+  ) { 
+  }
   ngAfterViewInit(): void {
+  }
+  
+  ngOnInit() {
     this.getData();
   }
-
-  ngOnInit() {
+  getProductDDL() {
+    this.categoryServiceProxy.getCategoryDDL().subscribe(
+      success => {
+        this.categoryDDL = success
+      }
+    );
+  }
+  getSubCategoryDDL(id: number) {
+    this.categoryServiceProxy.getCategoryByParentIdDDl({ parentId: id } as GetCategoryByParentIdInputDto).subscribe(
+      success => {
+        this.subcategoryDDL = success;
+      }
+    );
   }
   getData() {
+    this.getProductDDL();
     this.activatedRoute.queryParams.subscribe(
       param => {
         if (param.id) {
@@ -54,8 +77,13 @@ export class ProductAddEditComponent implements OnInit, AfterViewInit {
             success => {
               this.productForm.patchValue({
                 name: success.name,
-                price: success.price
+                price: success.price,
+                quantity: success.quantity,
+                parentId:success.categoryId
               });
+              this.getSubCategoryDDL(success.categoryId);
+              this.productForm.controls.subParentId.setValue(success.subCategoryId);
+
               this.imageUrl = success.photo;
             }
           );
@@ -64,10 +92,14 @@ export class ProductAddEditComponent implements OnInit, AfterViewInit {
     )
   }
   onSubmit() {
+    debugger;
     if (this.id === 0) {
       this.productsServiceProxy.addProduct({
         name: this.productForm.value.name,
         price: this.productForm.value.price,
+        quantity: this.productForm.value.quantity,
+        categoryId: parseInt(this.productForm.value.parentId),
+        subCategoryId: parseInt(this.productForm.value.subParentId),
         photo: this.imageUrl
       } as AddEditProductInputDto).subscribe(
         success => {
@@ -88,6 +120,9 @@ export class ProductAddEditComponent implements OnInit, AfterViewInit {
         id: this.id,
         name: this.productForm.value.name,
         price: this.productForm.value.price,
+        quantity: this.productForm.value.quantity,
+        categoryId: parseInt(this.productForm.value.parentId),
+        subCategoryId: parseInt(this.productForm.value.subParentId),
         photo: this.imageUrl
       } as AddEditProductInputDto).subscribe(
         success => {

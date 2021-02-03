@@ -1,123 +1,142 @@
 <div class="container p-t-20">
-    <div class="col-md-12">
-        <div class="haeder_div_page">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="title_div_page">
-                            <span class="material-icons description">
-                                description </span>Product List
-                        </p>
-                    </div>
-                </div>
-            </div>
+  <div class="col-md-12">
+    <div class="haeder_div_page">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="title_div_page">
+              <span class="material-icons description"> description </span
+              >Product List
+            </p>
+          </div>
         </div>
-        <div class="body_div_page">
-            <div class="col-md-12">
-                <form [formGroup]='searchForm' (ngSubmit)="loadData()">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="row d-flex justify-content-between">
-                                <!-- <div class="col-md-6">
+      </div>
+    </div>
+    <div class="body_div_page">
+      <div class="col-md-12">
+        <form [formGroup]="searchForm" (ngSubmit)="loadData()">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row d-flex justify-content-between">
+                <!-- <div class="col-md-6">
                                 </div> -->
-                                    <mat-form-field class="" appearance="outline">
-                                        <input placeholder="Product Name" formControlName="name"
-                                            matInput>
-                                    </mat-form-field>
-                                    <button [disabled]="!searchForm.controls.name.value" class="btn-filterN color-blur search" type="reset" (click)="ResetFrom()">
-                                        Reset
-                                    </button>
-                                    <button [disabled]="!searchForm.controls.name.value" type="submit" class="btn-filterN color-blur search" (click)="loadData()"> 
-                                        Search
-                                    </button>
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-2">
+                <mat-form-field class="" appearance="outline">
+                  <input
+                    placeholder="Product Name"
+                    formControlName="name"
+                    matInput
+                  />
+                </mat-form-field>
+                <button
+                  [disabled]="!searchForm.controls.name.value"
+                  class="btn-filterN color-blur search"
+                  type="reset"
+                  (click)="ResetFrom()"
+                >
+                  Reset
+                </button>
+                <button
+                  [disabled]="!searchForm.controls.name.value"
+                  type="submit"
+                  class="btn-filterN color-blur search"
+                  (click)="loadData()"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+            <!-- <div class="col-md-2">
                             
                         </div> -->
-                    </div>
-                </form>
-            </div>
-            <div class="border"></div>
-            <div class="row">
-                <div class="col-md-2">
-                    <button class="btn-filterN color-blur" (click)="ToCreate()">
-                        Add
-                    </button>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn-filterN color-blur" (click)="exportAsXLSX()">
-                        Export
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-12" style="overflow: hidden;">
-                <table class="list_ta" mat-table [dataSource]="productList" matSort matSortActive="created"
-                    matSortDisableClear>
-                    <!-- ProductName Column -->
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef>Product Name</th>
-                        <td mat-cell *matCellDef="let element">{{ element?.name }}</td>
-                    </ng-container>
-                     <!-- ProductPrice Column -->
-                     <ng-container matColumnDef="price">
-                        <th mat-header-cell *matHeaderCellDef>Product Price</th>
-                        <td mat-cell *matCellDef="let element">{{ element?.price }}</td>
-                    </ng-container>
-                    <!-- photo Column -->
-                    <ng-container matColumnDef="photo">
-                        <th mat-header-cell *matHeaderCellDef>Product Photo</th>
-                        <td mat-cell *matCellDef="let element">
-                            <img [src]="element?.photo" style="width: 70px;height: 70px;">
-                            <!-- <img  [ngStyle]="{ 'background-image': 'url(' + element?.photo + ')'}" style="    width: 100%;
-                        height: 70px;
-                        background-size: contain;
-                        background-position: center center;
-                        display: inline-block;
-                        background-repeat: no-repeat;" /> -->
-                        </td>
-                    </ng-container>
-                     <!-- lastUpdated Column -->
-                    <ng-container matColumnDef="lastUpdated">
-                        <th mat-header-cell *matHeaderCellDef>Product Price</th>
-                        <td mat-cell *matCellDef="let element">{{ element?.lastUpdated | date}}</td>
-                    </ng-container>
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="symbol">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Actions
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            <div style="width: 75px;">
-
-                                <div class="delete_div">
-                                    <a style="cursor: pointer;" (click)="Edit(element.id)">
-                                        <span class="material-icons delete">
-                                            create
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div style="width: 75px;">
-
-                                <div class="delete_div">
-                                    <a style="cursor: pointer;" (click)="Delete(element.id)">
-                                        <span class="material-icons delete">
-                                            delete
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-                </table>
-
-                <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="resultLength" showFirstLastButtons>
-                </mat-paginator>
-            </div>
+          </div>
+        </form>
+      </div>
+      <div class="border"></div>
+      <div class="row">
+        <div class="col-md-2">
+          <button class="btn-filterN color-blur" (click)="ToCreate()">
+            Add Product
+          </button>
         </div>
+        <div class="col-md-2">
+          <button class="btn-filterN color-blur" (click)="goToAddCategory()">
+            Add Category
+          </button>
+        </div>
+      </div>
+      <div class="col-md-12" style="overflow: hidden">
+        <table
+          class="list_ta"
+          mat-table
+          [dataSource]="productList"
+          matSort
+          matSortActive="created"
+          matSortDisableClear
+        >
+          <!-- ProductName Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Product Name</th>
+            <td mat-cell *matCellDef="let element">{{ element?.name }}</td>
+          </ng-container>
+          <!-- ProductPrice Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Product Price</th>
+            <td mat-cell *matCellDef="let element">{{ element?.price }}</td>
+          </ng-container>
+          <!-- photo Column -->
+          <ng-container matColumnDef="photo">
+            <th mat-header-cell *matHeaderCellDef>Product Photo</th>
+            <td mat-cell *matCellDef="let element">
+              <img [src]="element?.photo" style="width: 70px; height: 70px" />
+            </td>
+          </ng-container>
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="Quantity">
+            <th mat-header-cell *matHeaderCellDef>Product Quantity</th>
+            <td mat-cell *matCellDef="let element">{{ element?.quantity }}</td>
+          </ng-container>
+          <!-- SubCategoryName Column -->
+          <ng-container matColumnDef="SubCategoryName">
+            <th mat-header-cell *matHeaderCellDef>SubCategory Name</th>
+            <td mat-cell *matCellDef="let element">{{ element?.subCategoryName }}</td>
+          </ng-container>
+          <!-- CategoryName Column -->
+          <ng-container matColumnDef="CategoryName">
+            <th mat-header-cell *matHeaderCellDef>Category Name</th>
+            <td mat-cell *matCellDef="let element">{{ element?.categoryName }}</td>
+          </ng-container>
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <div style="width: 75px">
+                <div class="delete_div">
+                  <a style="cursor: pointer" (click)="Edit(element.id)">
+                    <span class="material-icons delete"> create </span>
+                  </a>
+                </div>
+              </div>
+              <div style="width: 75px">
+                <div class="delete_div">
+                  <a style="cursor: pointer" (click)="Delete(element.id)">
+                    <span class="material-icons delete"> delete </span>
+                  </a>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 20]"
+          [length]="resultLength"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
     </div>
+  </div>
 </div>

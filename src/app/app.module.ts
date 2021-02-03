@@ -4,7 +4,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppConfigService } from './shared/AppConfigService';
-import { API_BASE_URL, ProductsServiceProxy } from 'src/assets/Swagger/SwaggerGenerated';
+import { API_BASE_URL, CategoryServiceProxy, ProductsServiceProxy } from 'src/assets/Swagger/SwaggerGenerated';
 import { ProductAddEditComponent } from './product/product-add-edit/product-add-edit.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -33,6 +33,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ExcelService } from './services/ExcelService';
 import { UploadFile } from './services/upload-file.service';
 import { ConfigurationService } from './services/Configuration.Service';
+import { AddCategoryComponent } from './add-category/add-category.component';
 
 const matmodules = [
   MatFormFieldModule,
@@ -66,7 +67,8 @@ export function getApiBaseUrl(): string {
   declarations: [
     AppComponent,
     ProductAddEditComponent,
-    ProductListComponent
+    ProductListComponent,
+    AddCategoryComponent
   ],
   imports: [
     CommonModule,
@@ -88,6 +90,7 @@ export function getApiBaseUrl(): string {
     },
     { provide: API_BASE_URL, useFactory: getApiBaseUrl },
     ProductsServiceProxy,
+    CategoryServiceProxy,
     HttpClientModule,
     ExcelService,
     UploadFile

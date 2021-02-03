@@ -1,0 +1,94 @@
+<form [formGroup]='categoryForm' (ngSubmit)="onSubmit()">
+    <div class="container p-t-20">
+        <div class="col-md-12">
+            <div class="haeder_div_page">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="title_div_page">
+                                <span class="material-icons description">
+                                    description
+                                </span> Add Category/SubCategory</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body_div_page">
+                <div class="col-md-12">
+                    <div class="row">
+                        <!-- controls -->
+                        <div class="col-md-12">
+                            <!-- name -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="label">Name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="w-100" appearance="outline">
+                                                <input formControlName="name"
+                                                    placeholder="Category/SubCategory Name" matInput>
+                                                <mat-error *ngIf="categoryForm.get('name').errors?.required">Name Required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Parent Category -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="label">Parent Category</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="w-100 m-b-20" appearance="outline">
+                                                <mat-select
+                                                  appearance="outline"
+                                                  formControlName="parentId"
+                                                  placeholder="Select Category"
+                                                >
+                                                  <mat-option
+                                                    *ngFor="let item of productDDL"
+                                                    value="{{ item.id }}"
+                                                  >
+                                                    {{ item.name }}
+                                                  </mat-option>
+                                                </mat-select>
+                                              </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- buttons -->
+                        <div class="col-md-12 m-t-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn-filterN" (click)="BackToList()">
+                                        BackToList
+                                    </button>
+                                </div>
+
+                                <!-- <div class="col-md-4">
+                                    <button type="reset" class="btn-filterN ">
+                                        Reset
+                                    </button>
+                                </div> -->
+
+                                <div class="col-md-6">
+                                    <!-- <button type="submit" [disabled]="TeamForm.invalid" -->
+                                    <button [disabled]="categoryForm.invalid" type="submit" [ngClass]="categoryForm.invalid ? '':'color-blur'"
+                                        class="btn-filterN">
+                                       Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

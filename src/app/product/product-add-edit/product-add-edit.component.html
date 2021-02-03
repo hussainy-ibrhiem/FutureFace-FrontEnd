@@ -46,8 +46,80 @@
                                             <mat-form-field class="w-100" appearance="outline">
                                                 <input type="number" formControlName="price"
                                                     placeholder="Product Price" matInput>
-                                                <mat-error *ngIf="productForm.get('name').errors?.required">Price Required</mat-error>
+                                                <mat-error *ngIf="productForm.get('price').errors?.required">Price Required</mat-error>
                                             </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Quantity -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="label">Product Quantity</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="w-100" appearance="outline">
+                                                <input type="number" formControlName="quantity"
+                                                    placeholder="Product Quantity" matInput>
+                                                <mat-error *ngIf="productForm.get('quantity').errors?.required">Quantity Required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Parent Category -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="label">Parent Category</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="w-100 m-b-20" appearance="outline">
+                                                <mat-select
+                                                  appearance="outline"
+                                                  formControlName="parentId"
+                                                  placeholder="Select Category"
+                                                  required
+                                                >
+                                                  <mat-option
+                                                    *ngFor="let item of categoryDDL"
+                                                    [value]="item.id"
+                                                    (click)="getSubCategoryDDL(item.id)"
+                                                  >
+                                                    {{ item.name }}
+                                                  </mat-option>
+                                                </mat-select>
+                                              </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Sub Category -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="label">Parent SubCategory</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <mat-form-field class="w-100 m-b-20" appearance="outline">
+                                                <mat-select
+                                                  appearance="outline"
+                                                  formControlName="subParentId"
+                                                  placeholder="Select SubCategory"
+                                                  
+                                                >
+                                                  <mat-option
+                                                    *ngFor="let item of subcategoryDDL"
+                                                    [value]="item.id"
+                                                  >
+                                                    {{ item.name }}
+                                                  </mat-option>
+                                                </mat-select>
+                                              </mat-form-field>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +138,7 @@
                                         <div class="row">
                                           <div class="col-md-8 p-d-0">
                                             <div class="div-text">
-                                                <img [src]="imageUrl">
+                                                <img [src]="imageUrl" style="width: 100px; height: 100px">
                                             </div>
                                           </div>
                                           <!-- <div class="col-md-4">
