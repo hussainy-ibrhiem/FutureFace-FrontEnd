@@ -92,7 +92,6 @@ export class ProductAddEditComponent implements OnInit, AfterViewInit {
     )
   }
   onSubmit() {
-    debugger;
     if (this.id === 0) {
       this.productsServiceProxy.addProduct({
         name: this.productForm.value.name,
